@@ -2,7 +2,7 @@
 
 A (not very efficient) Erlang implementation of the
 _O(ND) differnence algorithm_ by Eugene W. Myers
-see link: https://www.google.com/search?q=eugene+meyers+difference+algorithm+filetype:pdf
+see link: https://www.google.com/search?q=eugene+myers+difference+algorithm+filetype:pdf
 
 #### Example
 <pre><code>
