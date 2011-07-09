@@ -3,3 +3,4 @@ erl_crash.dump
 /.eunit
 # Rebar compiles tests and more to .eunit/
 .eunit
+ebin
