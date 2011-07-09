@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg"
+     version="1.0"
+     viewBox="0 0 210 190"
+     id="svg2">
+  <style type="text/css"><![CDATA[
+    .border { fill:none; stroke: #000000; stroke-width: 2; }
+    .grid   { fill:none; stroke: #cccccc; stroke-width: 0.33; }
+    .path   { fill:none; stroke: #660000; stroke-width: 1; }
+    .endpt  { fill:#660000; stroke: none; }
+    .fpath  { fill:none; stroke: #006600; stroke-width: 1; }
+    .fendpt { fill:#006600; stroke: none; }
+  ]]></style>
+  <script><![CDATA[
+function lightup(id) {
+    var t = document.getElementById(id)
+    t.setAttributeNS(null,"fill-opacity", 1);
+}
+function lightdown(id) {
+    var t = document.getElementById(id)
+    t.setAttributeNS(null,"fill-opacity", 0.75);
+}
+var d_min=0;
+var d_max=33; // upper bound
+var curr_d=0;
+
+function set_d_visibility(d) {
+  for (i = d_min; i <= d_max; i++) {
+    var elem = document.getElementById("d"+i.toString());
+    if (i == d-2) {
+      elem.setAttributeNS(null,"fill-opacity", 0.5);
+      elem.setAttributeNS(null,"stroke-opacity", 0.5);
+      elem.setAttributeNS(null,"visibility", "visible");
+    } else if (i == d-1) {
+      elem.setAttributeNS(null,"fill-opacity", 0.75);
+      elem.setAttributeNS(null,"stroke-opacity", 0.75);
+      elem.setAttributeNS(null,"visibility", "visible");
+    } else if (i == d) {
+      elem.setAttributeNS(null,"visibility", "visible");
+    } else {
+      elem.setAttributeNS(null,"fill-opacity", 1);
+      elem.setAttributeNS(null,"stroke-opacity", 1);
+      elem.setAttributeNS(null,"visibility", "hidden");
+    }
+    var txtelem = document.getElementById("d"+i.toString()+"text");
+    if (i == d && txtelem)
+      txtelem.setAttributeNS(null,"visibility", "visible");
+    else
+      txtelem.setAttributeNS(null,"visibility", "hidden");
+  }
+}
+
+function do_prev() {
+  if (curr_d > d_min)
+    curr_d--;
+  set_d_visibility(curr_d);
+}
+function do_next() {
+  if (curr_d < d_max)
+    curr_d++;
+  set_d_visibility(curr_d);
+}
+  ]]></script>
+  <g id="nav">
+     <path d="M 3,0 v 10 l -5,-5 z"
+           fill="#112233" stroke="none"
+           fill-opacity="0.75"
+           id="prev"
+           onmouseover="lightup('prev');"
+           onmouseout="lightdown('prev');"
+           onmousedown="do_prev();"
+      />
+     <path d="M 190,0 v 10 l 5,-5 z"
+           fill="#112233" stroke="none"
+           fill-opacity="0.75"
+           id="next"
+           onmouseover="lightup('next')"
+           onmouseout="lightdown('next')"
+           onmousedown="do_next()"
+      />
+  </g>
+  <g id="gridlayer1">
+    <path d="M 30,10 v 170"
+ class="grid" />
+    <path d="M 40,10 v 170"
+ class="grid" />
+    <path d="M 50,10 v 170"
+ class="grid" />
+    <path d="M 60,10 v 170"
+ class="grid" />
+    <path d="M 70,10 v 170"
+ class="grid" />
+    <path d="M 80,10 v 170"
+ class="grid" />
+    <path d="M 90,10 v 170"
+ class="grid" />
+    <path d="M 100,10 v 170"
+ class="grid" />
+    <path d="M 110,10 v 170"
+ class="grid" />
+    <path d="M 120,10 v 170"
+ class="grid" />
+    <path d="M 130,10 v 170"
+ class="grid" />
+    <path d="M 140,10 v 170"
+ class="grid" />
+    <path d="M 150,10 v 170"
+ class="grid" />
+    <path d="M 160,10 v 170"
+ class="grid" />
+    <path d="M 170,10 v 170"
+ class="grid" />
+    <path d="M 180,10 v 170"
+ class="grid" />
+    <path d="M 20,20 h 160"
+ class="grid" />
+    <path d="M 20,30 h 160"
+ class="grid" />
+    <path d="M 20,40 h 160"
+ class="grid" />
+    <path d="M 20,50 h 160"
+ class="grid" />
+    <path d="M 20,60 h 160"
+ class="grid" />
+    <path d="M 20,70 h 160"
+ class="grid" />
+    <path d="M 20,80 h 160"
+ class="grid" />
+    <path d="M 20,90 h 160"
+ class="grid" />
+    <path d="M 20,100 h 160"
+ class="grid" />
+    <path d="M 20,110 h 160"
+ class="grid" />
+    <path d="M 20,120 h 160"
+ class="grid" />
+    <path d="M 20,130 h 160"
+ class="grid" />
+    <path d="M 20,140 h 160"
+ class="grid" />
+    <path d="M 20,150 h 160"
+ class="grid" />
+    <path d="M 20,160 h 160"
+ class="grid" />
+    <path d="M 20,170 h 160"
+ class="grid" />
+    <path d="M 20,180 h 160"
+ class="grid" />
+    <path d="M 20,10 v 170 h 160 v -170 z" class="border" />
+    <text x="25" y="7.50"
+          font-size="8" text-anchor="middle">A</text>
+    <text x="35" y="7.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="45" y="7.50"
+          font-size="8" text-anchor="middle">c</text>
+    <text x="55" y="7.50"
+          font-size="8" text-anchor="middle">a</text>
+    <text x="65" y="7.50"
+          font-size="8" text-anchor="middle">t</text>
+    <text x="75" y="7.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="85" y="7.50"
+          font-size="8" text-anchor="middle">a</text>
+    <text x="95" y="7.50"
+          font-size="8" text-anchor="middle">t</text>
+    <text x="105" y="7.50"
+          font-size="8" text-anchor="middle">e</text>
+    <text x="115" y="7.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="125" y="7.50"
+          font-size="8" text-anchor="middle">m</text>
+    <text x="135" y="7.50"
+          font-size="8" text-anchor="middle">y</text>
+    <text x="145" y="7.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="155" y="7.50"
+          font-size="8" text-anchor="middle">h</text>
+    <text x="165" y="7.50"
+          font-size="8" text-anchor="middle">a</text>
+    <text x="175" y="7.50"
+          font-size="8" text-anchor="middle">t</text>
+    <text x="15.0" y="17.50"
+          font-size="8" text-anchor="middle">A</text>
+    <text x="15.0" y="27.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="15.0" y="37.50"
+          font-size="8" text-anchor="middle">d</text>
+    <text x="15.0" y="47.50"
+          font-size="8" text-anchor="middle">o</text>
+    <text x="15.0" y="57.50"
+          font-size="8" text-anchor="middle">g</text>
+    <text x="15.0" y="67.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="15.0" y="77.50"
+          font-size="8" text-anchor="middle">a</text>
+    <text x="15.0" y="87.50"
+          font-size="8" text-anchor="middle">t</text>
+    <text x="15.0" y="97.50"
+          font-size="8" text-anchor="middle">e</text>
+    <text x="15.0" y="107.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="15.0" y="117.50"
+          font-size="8" text-anchor="middle">m</text>
+    <text x="15.0" y="127.50"
+          font-size="8" text-anchor="middle">y</text>
+    <text x="15.0" y="137.50"
+          font-size="8" text-anchor="middle"> </text>
+    <text x="15.0" y="147.50"
+          font-size="8" text-anchor="middle">s</text>
+    <text x="15.0" y="157.50"
+          font-size="8" text-anchor="middle">h</text>
+    <text x="15.0" y="167.50"
+          font-size="8" text-anchor="middle">o</text>
+    <text x="15.0" y="177.50"
+          font-size="8" text-anchor="middle">e</text>
+  </g>
+  <g id="d0text" visibility="visible">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">0</text>
+  </g>
+  <g id="d0" visibility="visible">
+    <path d="M 20,10  l 10,10 l 10,10"
+          class="path"
+    />
+    <circle cx="40" cy="30" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d1text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">1</text>
+  </g>
+  <g id="d1" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0"
+          class="path"
+    />
+    <circle cx="50" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="40" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d2text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">2</text>
+  </g>
+  <g id="d2" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="60" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="50" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="50" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d3text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">3</text>
+  </g>
+  <g id="d3" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="70" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="60" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="50" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="60" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d4text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">4</text>
+  </g>
+  <g id="d4" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="80" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="70" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="60" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="50" cy="60" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="70" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d5text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">5</text>
+  </g>
+  <g id="d5" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="90" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="70" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="60" cy="60" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10"
+          class="path"
+    />
+    <circle cx="70" cy="90" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="80" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d6text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">6</text>
+  </g>
+  <g id="d6" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="100" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="90" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10"
+          class="path"
+    />
+    <circle cx="150" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,0"
+          class="path"
+    />
+    <circle cx="80" cy="90" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10"
+          class="path"
+    />
+    <circle cx="80" cy="110" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="90" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d7text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">7</text>
+  </g>
+  <g id="d7" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="110" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="100" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="90" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,0"
+          class="path"
+    />
+    <circle cx="160" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10"
+          class="path"
+    />
+    <circle cx="160" cy="160" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0"
+          class="path"
+    />
+    <circle cx="90" cy="110" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="120" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="100" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d8text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">8</text>
+  </g>
+  <g id="d8" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="120" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="110" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="100" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="170" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0"
+          class="path"
+    />
+    <circle cx="170" cy="160" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10"
+          class="path"
+    />
+    <circle cx="160" cy="170" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="90" cy="120" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="130" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="110" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d9text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">9</text>
+  </g>
+  <g id="d9" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="130" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="120" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="110" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="160" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="170" cy="170" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="160" cy="180" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="90" cy="130" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="120" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d10text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">10</text>
+  </g>
+  <g id="d10" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="140" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="130" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="120" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="160" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="180" cy="170" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="170" cy="180" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="160" cy="180" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="90" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 0,10 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 0,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="80" cy="150" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="40" cy="130" r="2.50"
+            class="endpt" />
+  </g>
+  <g id="d11text" visibility="hidden">
+    <text x="17.5" y="7.50" font-size="8"
+          text-anchor="end"
+          fill="#0000cc">11</text>
+  </g>
+  <g id="d11" visibility="hidden">
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="150" cy="30" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="140" cy="40" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="path"
+    />
+    <circle cx="130" cy="50" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,0 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="140" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0"
+          class="path"
+    />
+    <circle cx="180" cy="160" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0 l 0,10"
+          class="path"
+    />
+    <circle cx="180" cy="170" r="2.50"
+            class="endpt" />
+    <path d="M 20,10  l 10,10 l 10,10 l 10,0 l 10,0 l 10,0 l 0,10 l 0,10 l 0,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 10,10 l 0,10 l 10,10 l 10,0 l 10,0 l 0,10 l 0,10"
+          class="fpath"
+    />
+    <circle cx="180" cy="180" r="2.50"
+            class="fendpt" />
+  <script><![CDATA[
+var d_max=11;
+  ]]></script>
+  </g>
+</svg>
