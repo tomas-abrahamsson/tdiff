@@ -21,6 +21,6 @@
 {application, tdiff,
  [{description, "Difference library"},
   {vsn, "0.1"},
-  {applicatons, [kernel, stdlib]},
+  {applications, [kernel, stdlib]},
   {modules, []},
   {env, []}]}.
