@@ -1,6 +1,8 @@
 erl_crash.dump
 *.beam
-/.eunit
 # Rebar compiles tests and more to .eunit/
 .eunit
+.rebar
+_build
+rebar.lock
 ebin
