@@ -31,8 +31,7 @@ start() ->
     start(_Opts=[]).
 
 start(Opts) ->
-    Seed = proplists:get_value(random_seed, Opts, random:seed0()),
-    set_random_seed(Seed),
+    rand_seed(Opts),
     Lengths = map(fun power_of_ten/1, lists:seq(1,3)),
     OrigStrs = map(fun create_string_of_len/1, Lengths),
     Changes = lists:append(
@@ -73,7 +72,7 @@ create_variation(Str, ChangePercent) ->
     c_v_2(Str, VariationChancePerChar).
 
 c_v_2([C|T]=Str, VariationChancePerChar) ->
-    DiceRoll = random:uniform(),
+    DiceRoll = rand_uniform(),
     if DiceRoll < VariationChancePerChar ->
 	    case get_random_change() of
 		delete      -> c_v_2(T, VariationChancePerChar);
@@ -87,13 +86,13 @@ c_v_2("", _VariationChancePerChar) ->
     "".
 
 get_random_change() ->
-    case random:uniform(3) of
+    case rand_uniform(3) of
 	1 -> delete;
 	2 -> {insert, get_random_char()};
 	3 -> {change, get_random_char()}
     end.
 
-get_random_char() -> $a + random:uniform(26) - 1.
+get_random_char() -> $a + rand_uniform(26) - 1.
 
 
 run_tdiff_bm(TestElems) ->
@@ -149,9 +148,6 @@ bytes_to_pretty_size(N) ->
 
 f(F,A) -> lists:flatten(io_lib:format(F,A)).
 
-set_random_seed({A,B,C}) ->
-    random:seed(A,B,C).
-
 run_num_times(N, Fun, Args) ->
     run_num_times_2(N, Fun, Args, {0,0}).
 
@@ -185,3 +181,33 @@ run_once(Fun, Args) ->
     receive
         {P, Data} -> Data
     end.
+
+
+-ifndef(NO_HAVE_RAND).
+%% Erlang 19 or later
+rand_uniform(Limit) -> rand:uniform(Limit).
+rand_uniform() -> rand:uniform().
+rand_seed(Opts) ->
+    case proplists:get_value(random_seed, Opts) of
+        undefined ->
+            _ = rand:uniform();
+        {Alg, Seed} ->
+            rand:seed(Alg, Seed);
+        AlgOrStateOrExpState ->
+            rand:seed(AlgOrStateOrExpState)
+    end.
+-else.
+%% Erlang 18 or earlier
+rand_uniform(Limit) -> random:uniform(Limit).
+rand_uniform() -> random:uniform().
+rand_seed() ->
+    {A, B, C} = os:timestamp(),
+    random:seed(erlang:phash2(A+B+C), erlang:phash2(B+C), erlang:phash2(A+C)).
+
+rand_seed(Opts) ->
+    Seed = proplists:get_value(random_seed, Opts, random:seed0()),
+    set_random_seed(Seed).
+
+set_random_seed({A,B,C}) ->
+    random_seed(A,B,C).
+-endif. % NO_HAVE_RAND

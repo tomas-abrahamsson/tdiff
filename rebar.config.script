@@ -1,0 +1,14 @@
+%% -*- erlang -*-
+
+%% In Erlang 19, the random module is deprecated
+NoHaveRandOpts = try rand:uniform() of
+                     F when is_float(F) -> []
+                 catch error:undef -> [{d,'NO_HAVE_RAND',true}]
+                 end.
+
+[{require_otp_vsn, ".*"},
+
+ %% Erlang compiler options
+ {erl_opts, [debug_info] ++ NoHaveRandOpts}
+].
+
