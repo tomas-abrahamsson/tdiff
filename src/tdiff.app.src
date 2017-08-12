@@ -20,7 +20,10 @@
 
 {application, tdiff,
  [{description, "Difference library"},
-  {vsn, "0.1"},
+  {vsn, "0.1.1"},
+  {maintainers, ["Tomas Abrahamsson"]},
+  {licenses, ["LGPL 2"]},
+  {links,[{"GitHub","https://github.com/tomas-abrahamsson/tdiff"}]},
   {applications, [kernel, stdlib]},
   {modules, []},
   {env, []}]}.
