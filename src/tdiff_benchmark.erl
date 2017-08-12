@@ -19,7 +19,7 @@
 -module(tdiff_benchmark).
 -import(lists, [map/2, foreach/2]).
 -export([start/0, start/1]).
--compile(export_all).
+%%-compile(export_all).
 
 -record(telem, {sz        :: integer(),
 		variation :: float(), %% 0..1
