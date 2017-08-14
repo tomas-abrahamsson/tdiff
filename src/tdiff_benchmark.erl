@@ -200,14 +200,10 @@ rand_seed(Opts) ->
 %% Erlang 18 or earlier
 rand_uniform(Limit) -> random:uniform(Limit).
 rand_uniform() -> random:uniform().
-rand_seed() ->
-    {A, B, C} = os:timestamp(),
-    random:seed(erlang:phash2(A+B+C), erlang:phash2(B+C), erlang:phash2(A+C)).
-
 rand_seed(Opts) ->
     Seed = proplists:get_value(random_seed, Opts, random:seed0()),
     set_random_seed(Seed).
 
 set_random_seed({A,B,C}) ->
-    random_seed(A,B,C).
+    random:seed(A,B,C).
 -endif. % NO_HAVE_RAND
