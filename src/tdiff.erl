@@ -26,13 +26,54 @@
 -export([format_diff_lines/1]).
 -export([print_diff_lines/1]).
 
+-type filename() :: string().
+-type options() :: [option()].
+-type option() :: {algorithm_tracer, no_tracer | algorithm_tracer()}.
+-type algorithm_tracer() :: fun(({d, d()} |
+                                 {dpath, dpath()} |
+                                 {exhausted_kdiagonals, d()} |
+                                 {final_edit_script, edit_script()}) -> _).
+
+-type d() :: integer().  %% The diagonal number, offset in number of steps from
+                         %% the diagonal through (0,0).
+-type dpath() :: dpath(term()).
+-type dpath(Elem) :: {X::index(), Y::index(),
+                      SX::[Elem]|oob, SY::[Elem]|oob,
+                      [Elem]}.%% The X and Y are indices along x and y.
+                              %% The SX and SY are  accumulated old/new strings
+                              %% The last is a list of elements in reverse
+                              %% order.
+-type index() :: non_neg_integer().
+-type edit_script() :: edit_script(term()).
+-type edit_script(Elem) :: [{eq, [Elem]} | {ins, [Elem]} | {del, [Elem]}].
+
+-export_type([options/0, option/0]).
+-export_type([edit_script/0, edit_script/1]).
+-export_type([algorithm_tracer/0, d/0, dpath/0, dpath/1, index/0]).
+
+%% @equiv diff_files(F1, F2, [])
+-spec diff_files(filename(), filename()) -> edit_script(Line::string()).
 diff_files(F1, F2) -> diff_files(F1, F2, _Opts=[]).
+
+%% @doc Read the two files into memory, split to lists of lines
+%% and compute the edit-script (or diff) for these.
+%% The result is a diff for a list of lines/strings.
+-spec diff_files(filename(), filename(), options()) -> edit_script(Line) when
+      Line :: string().
 diff_files(F1, F2, Opts) ->
     {ok,B1} = file:read_file(F1),
     {ok,B2} = file:read_file(F2),
     diff_binaries(B1, B2, Opts).
 
+%% @equiv diff_binaries(B1, B2, [])
 diff_binaries(B1, B2) -> diff_binaries(B1, B2, _Opts=[]).
+
+%% @doc Split the two binaries into lists of lines (lists of strings),
+%% and compute the edit-script (or diff) for these.
+%% The result is a diff for a list of lines/strings,
+%% not for a list of binaries.
+-spec diff_binaries(binary(), binary(), options()) -> edit_script(Line) when
+      Line :: string().
 diff_binaries(B1, B2, Opts) ->
     diff(split_bin_to_lines(B1), split_bin_to_lines(B2), Opts).
 
@@ -45,8 +86,23 @@ sbtl("", "", Acc)          -> lists:reverse(Acc);
 sbtl("", L, Acc)           -> lists:reverse([lists:reverse(L) | Acc]).
 
 
+%% @doc Print an edit-script, or diff. See {@link format_diff_lines/1}
+%% for info on the output.
+-spec print_diff_lines(edit_script(char())) -> _.
 print_diff_lines(Diff) -> io:format("~s~n", [format_diff_lines(Diff)]).
 
+%% @doc Format an edit-script or diff of lines to text, so that it looks like
+%% a diff. The result will look like this if printed:
+%% <pre><![CDATA[
+%%    123,456
+%%    < old line 1
+%%    < old line 2
+%%    ---
+%%    > new line 1
+%%    678
+%%    > new line 2
+%% ]]></pre>
+-spec format_diff_lines(edit_script(char())) -> iodata().
 format_diff_lines(Diff) -> fdl(Diff, 1,1).
 
 fdl([{del,Ls1},{ins,Ls2}|T], X, Y) ->
@@ -76,21 +132,6 @@ f(F,A) -> lists:flatten(io_lib:format(F,A)).
 format_lines(Indicator, Lines) ->
     lists:map(fun(Line) -> io_lib:format("~s~s", [Indicator, Line]) end,
               Lines).
-
-
-
-
-%%---------------------------------------------------------------------
-%% diff(Sx, Sy)       -> Diff
-%% diff(Sx, Sy, Opts) -> Diff
-%%   Sx = Sy = [Elem]      %% typically a list of lines, characters or words
-%%     Elem = term()
-%%   Opts = []
-%%   Diff = [D]
-%%     D = {eq, [Elem]} |  %% [Elem] is equal in Sx and Sy
-%%         {ins,[Elem]} |  %% [Elem] must be inserted into Sx to create Sy
-%%         {del,[Elem]}    %% [Elem] must be removed from Sx to create Sy
-%%---------------------------------------------------------------------
 
 %% Algorithm: "An O(ND) Difference Algorithm and Its Variations"
 %% by E. Myers, 1986.
@@ -169,8 +210,35 @@ format_lines(Indicator, Lines) ->
 %% good, because this fits the way lists are built in functional
 %% programming languages.
 
+%% @equiv diff(Sx, Sy, [])
+-spec diff(Old::[Elem], New::[Elem]) -> edit_script(Elem) when Elem::term().
 diff(Sx, Sy) -> diff(Sx, Sy, _Opts=[]).
 
+%% @doc Compute an edit-script  between two sequences of elements,
+%% such as two strings, lists of lines, or lists of elements more generally.
+%% The result is a list of operations add/del/eq that can transform
+%% `Old' to `New'
+%%
+%% The algorithm is "An O(ND) Difference Algorithm and Its Variations"
+%% by E. Myers, 1986.
+%%
+%% Note: This implementation currently searches only forwards. For
+%% large inputs (such as thousands of elements) that differ very much,
+%% this implementation will take unnecessarily long time, and may not
+%% complete within reasonable time.
+%%
+%% @end
+%% Todo for optimization to handle large inputs (see the paper for details)
+%% * Search from both ends as described in the paper.
+%%   When passing half of distance, search from the end (reversing
+%%   the strings). Stop again at half. If snakes don't meet,
+%%   pick the best (or all?) snakes from both ends, search
+%%   recursively from both ends within this space.
+%% * Keep track of visited coordinates.
+%%   If already visited, consider the snake/diagonal dead and don't follow it.
+
+-spec diff(Old::[Elem], New::[Elem], options()) -> edit_script(Elem) when
+      Elem::term().
 diff(Sx, Sy, Opts) ->
     SxLen = length(Sx),
     SyLen = length(Sy),
@@ -248,7 +316,9 @@ e2e([{y,C}|T], Acc)           -> e2e(T, [{del,[C]}|Acc]);
 e2e([{e,C}|T], Acc)           -> e2e(T, [{eq, [C]}|Acc]);
 e2e([],        Acc)           -> Acc.
 
-
+%% @doc Apply a patch, in the form of an edit-script, to a string or
+%% list of lines (or list of elements more generally)
+-spec patch([Elem], edit_script(Elem)) -> [Elem] when Elem::term().
 patch(S, Diff) -> p2(S, Diff, []).
 
 p2(S, [{eq,T}|Rest], Acc)  -> p2_eq(S, T, Rest, Acc);
