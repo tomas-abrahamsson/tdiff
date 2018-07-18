@@ -22,7 +22,7 @@
 -module(tdiff).
 -export([diff/2, diff/3, patch/2]).
 -export([diff_files/2, diff_files/3]).
--export([diff_binaries/2, diff_binaries/3]).
+-export([diff_binaries/2, diff_binaries/3, patch_binaries/2]).
 -export([format_diff_lines/1]).
 -export([print_diff_lines/1]).
 
@@ -320,6 +320,14 @@ e2e([],        Acc)           -> Acc.
 %% list of lines (or list of elements more generally)
 -spec patch([Elem], edit_script(Elem)) -> [Elem] when Elem::term().
 patch(S, Diff) -> p2(S, Diff, []).
+
+%% @doc Apply a patch to a binary.  The binary is first split to list
+%% of lines (list of strings), and the edit-script is expected to be
+%% for lists of strings/lines. The result is a list of strings.
+-spec patch_binaries(binary(), edit_script(Line)) -> [Line] when
+      Line::string().
+patch_binaries(B, Diff) ->
+    patch(split_bin_to_lines(B), Diff).
 
 p2(S, [{eq,T}|Rest], Acc)  -> p2_eq(S, T, Rest, Acc);
 p2(S, [{ins,T}|Rest], Acc) -> p2_ins(S, T, Rest, Acc);

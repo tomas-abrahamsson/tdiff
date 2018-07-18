@@ -18,6 +18,7 @@
 -module(tdiff_tests).
 -include_lib("eunit/include/eunit.hrl").
 
+
 simple_diff_test() ->
     [{eq,"a"},{del,"B"},{ins,"X"},{eq,"ccc"},{del,"D"},{ins,"Y"},{eq,"e"}] =
         tdiff:diff("aBcccDe", "aXcccYe").
@@ -37,3 +38,28 @@ only_deletions_test() ->
     [{del,"aaa"}] = tdiff:diff("aaa", ""),
     [{eq,"a"},{del,"b"},{eq,"a"},{del,"b"},{eq,"a"},{del,"b"},{eq,"a"}] =
         tdiff:diff("abababa", "aaaa").
+
+patch_test() ->
+    Diff = tdiff:diff(Old="a cat ate my hat", New="a dog ate my shoe"),
+    New = tdiff:patch(Old, Diff).
+
+diff_patch_binaries_test() ->
+    [{del,["The Naming of Cats is a difficult matter,\n"]},
+     {ins,["The Naming of Dogs is a different matter,\n"]},
+     {eq,["It isn't just one of your holiday games;\n",
+          "You may think at first I'm as mad as a hatter\n"]},
+     {del,["When I tell you, a cat must have THREE DIFFERENT NAMES.\n"]}] =
+        Diff =
+        tdiff:diff_binaries(
+          %% T.S. Elliot:
+          Old =
+              <<"The Naming of Cats is a difficult matter,\n"
+                "It isn't just one of your holiday games;\n"
+                "You may think at first I'm as mad as a hatter\n"
+                "When I tell you, a cat must have THREE DIFFERENT NAMES.\n">>,
+          %% Not T.S. Elliot (of course):
+          New =
+              <<"The Naming of Dogs is a different matter,\n"
+                "It isn't just one of your holiday games;\n"
+                "You may think at first I'm as mad as a hatter\n">>),
+    New = list_to_binary(tdiff:patch_binaries(Old, Diff)).
